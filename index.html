@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Faithosity MVP Plan</title>
+<style>
+:root{--ink:#1D1830;--royal:#3D2C6E;--royal2:#5A4596;--gold:#C9A227;--light:#F4F1FA;--white:#fff;--muted:#6B6780;--line:#E2DEEC;--green:#1F8A4C;--red:#C4321F;--amber:#B7791F;
+  --head:"Century Schoolbook","C059",Georgia,serif;--body:Arial,"Liberation Sans",Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:#0f0c1a;font-family:var(--body);color:var(--ink)}
+#stage{display:flex;flex-direction:column;align-items:center;gap:28px;padding:28px 0 60px}
+.frame{position:relative;box-shadow:0 10px 40px rgba(0,0,0,.45);border-radius:6px;overflow:hidden}
+.slide{position:absolute;left:0;top:0;width:1280px;height:720px;background:var(--white);overflow:hidden;transform-origin:top left}
+.note{display:none;background:#fffdf5;border-left:4px solid var(--gold);padding:12px 18px;font-size:15px;line-height:1.5;border-radius:6px;margin-top:-14px}
+.note b{color:var(--royal)}
+body.shownotes .note{display:block}
+.slide.dark{background:var(--ink);color:#fff}
+.pad{position:absolute;inset:48px 58px 40px}
+.eyebrow{display:flex;align-items:center;gap:12px;font:700 13px var(--body);letter-spacing:.06em;color:var(--royal2)}
+.badge{width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font:700 16px var(--body)}
+h1{font:700 40px/1.12 var(--head);color:var(--ink);margin-top:10px}
+h2{font:700 30px/1.15 var(--head);margin-top:8px}
+.sub{color:var(--muted);font-size:17px;margin-top:8px}
+.foot{position:absolute;left:58px;right:58px;bottom:18px;display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.dark .foot{display:none}
+.card{background:var(--light);border-radius:14px;padding:20px 22px}
+.card h3{font:700 19px/1.2 var(--head);color:var(--royal);margin-bottom:6px}
+.card p,.card li{font-size:15px;line-height:1.4}
+.num{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);display:inline-grid;place-items:center;font:700 14px var(--body);flex:none}
+.num.r{background:var(--royal);color:#fff}
+.royal{background:var(--royal);color:#fff}.royal h3{color:var(--gold)}
+.grid{display:grid;gap:18px}
+.row{display:flex;gap:14px;align-items:flex-start}
+.muted{color:var(--muted)}
+img.shot{border:1px solid var(--line);border-radius:6px;display:block;width:100%}
+.check{color:var(--green);font-weight:700}
+.tag{display:inline-block;border-radius:6px;padding:3px 10px;color:#fff;font:700 12px var(--body)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--royal);color:#fff;text-align:center;padding:11px 10px;font-weight:700}
+th:first-child{text-align:left;border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
+td{padding:10px;text-align:center}td:first-child{text-align:left;font-weight:700}
+tr:nth-child(even) td{background:var(--light)}
+.arrow{color:var(--muted);font-size:20px;align-self:center}
+#bar{position:fixed;left:0;top:0;height:4px;background:var(--gold);z-index:6;transition:width .2s}
+#hud{position:fixed;right:14px;bottom:10px;color:#b9b2cf;font-size:12px;z-index:4;background:rgba(15,12,26,.8);padding:5px 10px;border-radius:12px}
+@media print{
+  body{background:#fff}#stage{display:block;padding:0}
+  .frame{width:1280px!important;height:720px!important;box-shadow:none;border-radius:0;page-break-after:always}
+  .slide{transform:none!important}
+  .note,#bar,#hud{display:none!important}
+  @page{size:1280px 720px;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage">
+
+<!-- 1 Title -->
+<section class="slide dark" data-notes="Good morning. This is my individual assessment of the Faithosity MVP. I followed seven steps: goals, user flows, architecture, phases, risks, team roles and open questions. I also built a small proof of concept to test the riskiest idea, the Easy Button, against real TCO client websites. It is a throwaway prototype, not production code.">
+  <div style="position:absolute;right:-110px;top:-110px;width:540px;height:540px;border-radius:50%;background:var(--royal)"></div>
+  <div style="position:absolute;right:-60px;bottom:-140px;width:400px;height:400px;border-radius:50%;background:var(--royal2)"></div>
+  <div style="position:absolute;left:78px;top:148px;width:820px">
+    <div style="width:58px;height:6px;background:var(--gold)"></div>
+    <div style="color:var(--gold);font:700 15px var(--body);letter-spacing:.05em;margin-top:14px">FAITHOSITY · CHURCH WEBSITE BUILDER MVP</div>
+    <div style="font:700 62px/1.12 var(--head);margin-top:24px">How I would build it,<br>step by step</div>
+    <p style="font-size:21px;color:#D9D4E8;margin-top:28px;line-height:1.4">My individual assessment: user flows, architecture, phases, risks, team roles, and a working proof of concept</p>
+    <p style="font:700 18px var(--body);margin-top:70px">Ace King Mengote · Full Stack Developer</p>
+    <p style="font-size:15px;color:#B9B2CF;margin-top:8px">Technology &amp; R&amp;D · The Church Online · November 2, 2026</p>
+  </div>
+</section>
+
+<!-- 2 Agenda -->
+<section class="slide" data-notes="Here is the structure. Seven steps, and in step five I show the proof of concept.">
+  <div class="pad">
+    <h1 style="margin-top:4px">Seven steps from MVP document to launch</h1>
+    <p class="sub">Each step answers one question leadership asked in the MVP review</p>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:34px">
+      <div class="card" style="height:196px"><span class="num">1</span><h3 style="margin-top:14px">Goals</h3><p>What we build and why churches choose it</p></div>
+      <div class="card"><span class="num">2</span><h3 style="margin-top:14px">User flows</h3><p>What a church sees, step by step</p></div>
+      <div class="card"><span class="num">3</span><h3 style="margin-top:14px">Architecture</h3><p>How the platform is put together on AWS</p></div>
+      <div class="card"><span class="num">4</span><h3 style="margin-top:14px">Phases</h3><p>Foundations → alpha → beta → MVP launch</p></div>
+      <div class="card" style="height:196px"><span class="num r">5</span><h3 style="margin-top:14px">Risks &amp; PoC</h3><p>What could fail, and what I already tested</p></div>
+      <div class="card"><span class="num">6</span><h3 style="margin-top:14px">Team roles</h3><p>Who builds what, and how we work</p></div>
+      <div class="card"><span class="num">7</span><h3 style="margin-top:14px">Open questions</h3><p>Decisions needed from leadership</p></div>
+      <div class="card royal"><h3>+ Working PoC</h3><p style="margin-top:12px">Easy Button tested on 4 real TCO client sites, plus the guided builder</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 3 Goals -->
+<section class="slide" data-notes="The goal in one sentence: a small church launches a premium website without an agency. Four things make us different from Wix or Squarespace: church content is built in, the experience is guided, the Easy Button imports the current site, and the templates look premium and faith-themed. The success measures are my proposal; leadership can adjust them.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">1</span>STEP 1 OF 7</div>
+    <h1>A church website in under an hour</h1>
+    <div style="display:grid;grid-template-columns:530px 1fr;gap:28px;margin-top:26px">
+      <div class="card royal" style="padding:30px 32px;border-radius:22px;height:452px;display:flex;flex-direction:column">
+        <div style="color:var(--gold);font:700 13px var(--body);letter-spacing:.05em">THE GOAL</div>
+        <p style="font:24px/1.35 var(--head);margin-top:14px">A guided, AI-assisted builder that lets a small church launch a premium, church-themed website without hiring an agency.</p>
+        <div style="margin-top:auto">
+          <div style="color:var(--gold);font:700 14px var(--body)">Proposed MVP success measures</div>
+          <p style="margin-top:10px;line-height:1.7;font-size:15.5px">Sign-up → published site in under 60 minutes<br>Most churches publish without a support ticket<br>AI cost tracked per church, within plan limits</p>
+        </div>
+      </div>
+      <div class="grid" style="gap:14px">
+        <div class="card row"><span class="num">†</span><div><h3>Church-first content</h3><p>Watch Live, service times, pastor, ministries and giving are built in, not plugins.</p></div></div>
+        <div class="card row"><span class="num">→</span><div><h3>Guided, not a blank canvas</h3><p>Questions and choices instead of panels and widgets.</p></div></div>
+        <div class="card row"><span class="num">»</span><div><h3>Easy Button</h3><p>Paste the current website address; the draft fills itself.</p></div></div>
+        <div class="card row"><span class="num">★</span><div><h3>Premium church look</h3><p>Faith-themed templates that look custom, not generic.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 4 Evidence -->
+<section class="slide" data-notes="I studied the four example sites James shared. The same blocks appear on all of them: Watch Live in the hero and menu, events, giving links, pastor and ministries. Forms are common too, but they are Phase II in the MVP document. So these blocks become our content model.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">1</span>STEP 1 OF 7</div>
+    <h1>What every church site needs</h1>
+    <p class="sub">Evidence from 4 recent TCO builds: 2cal.org · thecentralbaptistchurch.org · rayofhope.org · csmbc.org</p>
+    <table style="margin-top:22px">
+      <tr><th>Feature</th><th>Second Calvary</th><th>Central Baptist</th><th>Ray of Hope</th><th>Clay Street</th><th>MVP</th></tr>
+      <tr><td>Watch Live in hero and menu</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Service times near the top</td><td>–</td><td class="check">✓</td><td>page</td><td class="check">✓</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Event slider + full calendar</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Giving: outbound platforms</td><td>Givelify, Pushpay</td><td>Givelify</td><td>Online</td><td>Online</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Pastor section</td><td class="check">✓</td><td>–</td><td class="check">✓</td><td class="check">✓</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Ministries list</td><td>groups</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td style="color:var(--royal);font-weight:700">Core</td></tr>
+      <tr><td>Prayer / contact forms</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td style="color:var(--amber);font-weight:700">Phase II</td></tr>
+    </table>
+    <p style="margin-top:20px;font-size:16px"><b style="color:var(--royal)">Takeaway:</b> these blocks become the MVP content model. Every template renders the same blocks, so switching templates never loses content.</p>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 4b Sanctuary templates -->
+<section class="slide" data-notes="James shared three template examples for the builder: Cornerstone, Heritage and Riverside. When I compared them, the important thing is that all three have exactly the same eight sections in the same order. Only the fonts, colors, corner shapes and photos change. That confirms the approach in my architecture: one content model, and templates are just themes on top of it.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">1</span>STEP 1 OF 7</div>
+    <h1>The Sanctuary templates: three looks, one structure</h1>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:34px;margin-top:22px">
+      <div style="display:flex;gap:16px">
+        <figure style="text-align:center"><img class="shot" src="assets/tpl-cornerstone.jpg" alt="Cornerstone template" style="height:410px;width:auto"><figcaption style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Cornerstone</figcaption><div style="display:flex;gap:4px;justify-content:center;margin-top:5px"><i style="width:18px;height:18px;border-radius:50%;background:#13DFDE"></i><i style="width:18px;height:18px;border-radius:50%;background:#031C23"></i><i style="width:18px;height:18px;border-radius:50%;background:#F2F7FA;border:1px solid var(--line)"></i></div></figure>
+        <figure style="text-align:center"><img class="shot" src="assets/tpl-heritage.jpg" alt="Heritage template" style="height:410px;width:auto"><figcaption style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Heritage</figcaption><div style="display:flex;gap:4px;justify-content:center;margin-top:5px"><i style="width:18px;height:18px;border-radius:50%;background:#895138"></i><i style="width:18px;height:18px;border-radius:50%;background:#142326"></i><i style="width:18px;height:18px;border-radius:50%;background:#F5EFE3;border:1px solid var(--line)"></i></div></figure>
+        <figure style="text-align:center"><img class="shot" src="assets/tpl-riverside.jpg" alt="Riverside template" style="height:410px;width:auto"><figcaption style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Riverside</figcaption><div style="display:flex;gap:4px;justify-content:center;margin-top:5px"><i style="width:18px;height:18px;border-radius:50%;background:#F2745E"></i><i style="width:18px;height:18px;border-radius:50%;background:#123D43"></i><i style="width:18px;height:18px;border-radius:50%;background:#E9F5F5;border:1px solid var(--line)"></i></div></figure>
+      </div>
+      <div>
+        <h3 style="font:700 19px var(--head);color:var(--royal)">Same 8 sections, same order</h3>
+        <ol id="sections" style="list-style:none;padding:0;margin-top:10px;display:grid;gap:7px"></ol>
+        <div class="card" style="margin-top:14px;padding:14px 18px"><b style="color:var(--royal)">Only the theme changes:</b> fonts (bold sans · classic serif · script + serif), colors, corner shapes and photos</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 5 Journey -->
+<section class="slide" data-notes="This is the church's journey. The Easy Button is step two, so most churches skip a lot of typing. A live preview is always on the right side. The readiness checklist stops them from publishing a half-finished site, for example when the About Us still has default text. Publishing gives a free subdomain or their own domain.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">2</span>STEP 2 OF 7</div>
+    <h1>The church's journey: ten guided steps</h1>
+    <div id="flow" style="display:grid;grid-template-columns:repeat(5,1fr);gap:46px 38px;margin-top:34px"></div>
+    <p style="margin-top:28px;font-size:16px"><b style="color:var(--royal)">Always visible:</b> a live preview (desktop / mobile) that updates as they type. Users can leave and return at any step.</p>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 6 TCO side -->
+<section class="slide" data-notes="On the TCO side there are four kinds of access. Support can view as the customer, and every view is logged. Credits need manager approval. On the right is the billing lifecycle from the MVP document: past due, then suspended after 14 days, then terminated after 14 more days, with weekly emails. Stripe Billing already handles retries, so we only build the status logic and emails.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">2</span>STEP 2 OF 7</div>
+    <h1>Behind the scenes: staff and billing</h1>
+    <div style="display:grid;grid-template-columns:560px 1fr;gap:34px;margin-top:26px">
+      <div class="card" style="padding:26px 30px;border-radius:22px;height:452px">
+        <h3 style="font-size:22px">TCO internal roles</h3>
+        <div style="margin-top:16px;display:grid;gap:18px">
+          <div class="row"><span class="num" style="width:14px;height:14px;margin-top:5px"></span><div><b>Owner / Executive</b><p class="muted" style="color:var(--ink)">All churches, revenue, AI and AWS cost dashboards</p></div></div>
+          <div class="row"><span class="num" style="width:14px;height:14px;margin-top:5px"></span><div><b>Support</b><p style="color:var(--ink)">View as customer (audit-logged); issue credits with manager approval</p></div></div>
+          <div class="row"><span class="num" style="width:14px;height:14px;margin-top:5px"></span><div><b>Sales</b><p style="color:var(--ink)">See the sites they created and which became paid</p></div></div>
+          <div class="row"><span class="num" style="width:14px;height:14px;margin-top:5px"></span><div><b>Church Owner / Editor</b><p style="color:var(--ink)">Owner manages billing and invites Editors</p></div></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font:700 22px var(--head);color:var(--royal)">Subscription lifecycle (monthly only)</h3>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:22px">
+          <span class="tag" style="background:var(--green);padding:14px 16px;font-size:14px">Active</span><span class="arrow">→</span>
+          <span class="tag" style="background:var(--amber);padding:14px 16px;font-size:14px">Past due</span><span class="arrow">→</span>
+          <span class="tag" style="background:var(--red);padding:14px 16px;font-size:14px">Suspended</span><span class="arrow">→</span>
+          <span class="tag" style="background:#4A4458;padding:14px 16px;font-size:14px">Terminated</span>
+        </div>
+        <div style="display:flex;gap:42px;margin:8px 0 0 64px;color:var(--muted);font-size:13px"><span>Card fails</span><span>14 days</span><span>14 more days</span></div>
+        <div style="margin-top:30px;display:grid;gap:12px;font-size:16px;line-height:1.4">
+          <p><b>Stripe Billing</b> handles cards, retries and receipts; our webhooks drive the status.</p>
+          <p><b>Weekly emails</b> (SES) until resolved; expiring-card warnings in advance.</p>
+          <p><b>Cancel</b> keeps the site live until the paid month ends.</p>
+          <p><b>Credits and refunds</b> are logged and need manager approval.</p>
+          <p><b>Broadcasts</b> to all or tagged customers for maintenance notices.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 7 Architecture -->
+<section class="slide" data-notes="This is the architecture. One Next.js application serves the builder, the admin console and every church website. The site renderer reads the tenant from the domain name, the same way my proof of concept does. CloudFront handles SSL for the wildcard subdomain and for custom domains. Cognito handles login and roles, PostgreSQL stores accounts and content, S3 stores images, and AI calls go through our own service so we can meter and limit them per plan. Everything runs in a separate AWS account, as James suggested, with budget alerts.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">3</span>STEP 3 OF 7</div>
+    <h1>Architecture: one platform serves every church</h1>
+    <div id="arch" style="margin-top:26px;display:grid;gap:10px"></div>
+    <p class="muted" style="font-size:13px;margin:10px 0 0 172px">Runs in a separate AWS account under TCO's organization · CloudWatch alarms and AWS Budgets send cost alerts and weekly usage reports</p>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 8 Decisions -->
+<section class="slide" data-notes="Six decisions. The most important is one renderer for all churches instead of one Amplify app per church, because per-app limits and costs would not scale. Second, subdomains with optional custom domains, which Melissa confirmed. Third, content is separate from templates, so switching templates is free. The rest support cost control and team skills.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">3</span>STEP 3 OF 7</div>
+    <h1>Six technical decisions and why</h1>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:28px">
+      <div class="card" style="height:212px"><div class="row" style="align-items:center"><span class="num r">1</span><h3 style="margin:0">One renderer, many churches</h3></div><p style="margin-top:14px">Not one Amplify app per church: per-app limits and cost would not scale to thousands of sites.</p></div>
+      <div class="card"><div class="row" style="align-items:center"><span class="num r">2</span><h3 style="margin:0">Subdomain + custom domain</h3></div><p style="margin-top:14px">church.faithosity.com by default; CNAME their own domain (confirmed: a CNAME can't point to a folder).</p></div>
+      <div class="card"><div class="row" style="align-items:center"><span class="num r">3</span><h3 style="margin:0">Content separate from templates</h3></div><p style="margin-top:14px">Templates only change the look, so churches switch designs freely and AI fills one model.</p></div>
+      <div class="card" style="height:212px"><div class="row" style="align-items:center"><span class="num r">4</span><h3 style="margin:0">PostgreSQL with JSON content</h3></div><p style="margin-top:14px">Relational for accounts and billing; JSON columns for page blocks that vary by template.</p></div>
+      <div class="card"><div class="row" style="align-items:center"><span class="num r">5</span><h3 style="margin:0">AI behind our own service</h3></div><p style="margin-top:14px">Per-plan limits, cost tracking, moderation, and freedom to change AI providers.</p></div>
+      <div class="card"><div class="row" style="align-items:center"><span class="num r">6</span><h3 style="margin:0">TypeScript end to end</h3></div><p style="margin-top:14px">Next.js + Node match the whole team's skills; one language for front and back end.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 8b Section schema -->
+<section class="slide" data-notes="This shows how the Sanctuary sections connect to the MVP features. Each section reads from one content model: the hero uses the church name and the Watch Live link, the message cards come from their YouTube playlist, the Life together cards come from events and Google Calendar. A theme is just a small set of tokens: fonts, colors and corner radius. So adding a new template is mostly design work, not new code. One gap: Give, service times and the pastor appear on all four real TCO sites, but not in these templates. I suggest adding them as optional sections.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">3</span>STEP 3 OF 7</div>
+    <h1>One section schema, many themes</h1>
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:26px;margin-top:20px">
+      <table style="font-size:13.5px">
+        <tr><th style="text-align:left">Template section</th><th style="text-align:left">Filled from</th><th style="text-align:left">MVP feature</th></tr>
+        <tr><td>Header + Plan a Visit</td><td style="text-align:left">Logo, name, chosen pages</td><td style="text-align:left">Logo &amp; pages steps</td></tr>
+        <tr><td>Hero</td><td style="text-align:left">Tagline, photo, Watch Online link</td><td style="text-align:left">Church info, AI copy, live stream</td></tr>
+        <tr><td>4 quick links</td><td style="text-align:left">Worship time, location, live, serve</td><td style="text-align:left">Service times, directions</td></tr>
+        <tr><td>Featured block</td><td style="text-align:left">Mission or next event</td><td style="text-align:left">About / events</td></tr>
+        <tr><td>Messages (3 cards)</td><td style="text-align:left">Latest sermons</td><td style="text-align:left">YouTube playlist, sermon library</td></tr>
+        <tr><td>Life together (2 cards)</td><td style="text-align:left">Upcoming events</td><td style="text-align:left">Events + Google Calendar</td></tr>
+        <tr><td>Invitation band</td><td style="text-align:left">"There's a place for you here"</td><td style="text-align:left">Plan a visit</td></tr>
+        <tr><td>Footer</td><td style="text-align:left">Address, social, credit</td><td style="text-align:left">Directions link, social links</td></tr>
+      </table>
+      <div style="display:grid;gap:12px;align-content:start">
+        <div class="card" style="padding:14px 18px"><b style="color:var(--royal)">A theme = a few tokens</b>
+          <pre style="font:13px/1.5 Consolas,'Courier New',monospace;margin-top:8px;white-space:pre-wrap">heritage: {
+  font: "serif",
+  primary: "#895138",
+  surface: "#F5EFE3",
+  radius: 4
+}</pre></div>
+        <div class="card royal" style="padding:14px 18px"><b style="color:var(--gold)">Gap to close</b><p style="margin-top:6px;font-size:14px;line-height:1.4">Give, service times and pastor are on all 4 real TCO sites but not in these templates. Add them as optional sections.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 9 Phases -->
+<section class="slide" data-notes="I propose four phases. Phase zero is two weeks of foundations and spikes, including the riskiest parts. Alpha is internal at TCO. Beta goes to ten to twenty friendly churches from our network, with billing and AI. Then launch. About thirteen weeks is my draft estimate; we will refine it when we merge the four plans. The landing page runs in parallel and ships first.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">4</span>STEP 4 OF 7</div>
+    <h1>Phased delivery: about 13 weeks to MVP launch</h1>
+    <p class="sub">Draft estimate for a 4-developer team, to refine together once we merge plans</p>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;margin-top:26px;align-items:stretch">
+      <div class="card" style="height:372px;border-radius:20px"><div style="font:700 12px var(--body);color:var(--royal2)">WEEKS 1–2</div><div style="font:700 26px var(--head);margin-top:6px">Phase 0</div><p class="muted">Foundations</p><p style="margin-top:18px;line-height:1.9">GitHub, CI/CD, staging<br>AWS account + Cognito<br>Multi-tenant + domain spike<br>Easy Button PoC → design</p></div>
+      <span class="arrow">→</span>
+      <div class="card" style="border-radius:20px"><div style="font:700 12px var(--body);color:var(--royal2)">WEEKS 3–6</div><div style="font:700 26px var(--head);margin-top:6px">Alpha</div><p class="muted">Internal</p><p style="margin-top:18px;line-height:1.9">Guided wizard + live preview<br>Content model + 3 Sanctuary templates<br>Publish to subdomain<br>Basic TCO admin</p></div>
+      <span class="arrow">→</span>
+      <div class="card" style="border-radius:20px"><div style="font:700 12px var(--body);color:var(--royal2)">WEEKS 7–10</div><div style="font:700 26px var(--head);margin-top:6px">Beta</div><p class="muted">10–20 churches</p><p style="margin-top:18px;line-height:1.9">Stripe billing + lifecycle<br>AI content/images + limits<br>Easy Button v1, custom domains<br>Support chatbot, analytics, 4–6 templates</p></div>
+      <span class="arrow">→</span>
+      <div class="card royal" style="border-radius:20px"><div style="font:700 12px var(--body);color:var(--gold)">WEEKS 11–13</div><div style="font:700 26px var(--head);margin-top:6px">MVP launch</div><p style="color:#D9D4E8">Public</p><p style="margin-top:18px;line-height:1.9">Security + accessibility review<br>Load test, monitoring, alerts<br>Knowledge base + help<br>Launch with Faithosity.com</p></div>
+    </div>
+    <p style="margin-top:20px;font-size:16px"><b style="color:var(--royal)">In parallel:</b> the Faithosity.com landing page ships first (before the MVP), so marketing can collect sign-ups early.</p>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 10 Risks -->
+<section class="slide" data-notes="These are the main risks. The two high ones are the Easy Button and custom domains at scale. For the Easy Button I already built a proof of concept, which I will show next. For custom domains I suggest a spike in phase zero. Accessibility is not confirmed yet, but building it into the templates now costs much less than fixing it later.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">5</span>STEP 5 OF 7</div>
+    <h1>Risks I see, and how we reduce them</h1>
+    <table style="margin-top:26px;font-size:16px">
+      <tr><th style="text-align:left">Risk</th><th>Impact</th><th style="text-align:left">Mitigation</th></tr>
+      <tr><td>Easy Button quality varies by site</td><td><span class="tag" style="background:var(--red)">High</span></td><td style="text-align:left">PoC done: heuristics + AI + user review; never auto-publish</td></tr>
+      <tr><td>Custom domains + SSL at scale</td><td><span class="tag" style="background:var(--red)">High</span></td><td style="text-align:left">Phase 0 spike on CloudFront/ACM before committing</td></tr>
+      <tr><td>AI cost and misuse</td><td><span class="tag" style="background:var(--amber)">Med</span></td><td style="text-align:left">Per-plan limits, usage meter, moderation, budget alerts</td></tr>
+      <tr><td>Copying another church's site</td><td><span class="tag" style="background:var(--amber)">Med</span></td><td style="text-align:left">Ownership checkbox, report-abuse flow, audit trail</td></tr>
+      <tr><td>Facebook live embeds break weekly</td><td><span class="tag" style="background:var(--green)">Low</span></td><td style="text-align:left">Link out to Facebook; YouTube channel embed is stable</td></tr>
+      <tr><td>Accessibility rules still unconfirmed</td><td><span class="tag" style="background:var(--amber)">Med</span></td><td style="text-align:left">Build WCAG AA into templates now; cheaper than retrofitting</td></tr>
+      <tr><td>Scope creep (giving, Prospect Studio)</td><td><span class="tag" style="background:var(--amber)">Med</span></td><td style="text-align:left">Design data model for them; build after MVP</td></tr>
+    </table>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 11 PoC Easy Button -->
+<section class="slide" data-notes="This is my proof of concept. I pasted Clay Street's address into the Easy Button. In about one second it found the name, pastor, address, service times, giving links, Watch Live link and logo, and the preview built itself. Across the four example sites it filled 84 percent of the key fields without any AI. An optional AI step can rewrite and fill the rest. The user always reviews before publishing. It is a throwaway prototype written with only the Python standard library, so it runs anywhere. Production would be Next.js as shown in the architecture.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">5</span>STEP 5 OF 7</div>
+    <h1>Proof of concept: the Easy Button works on real sites</h1>
+    <div style="display:grid;grid-template-columns:710px 1fr;gap:28px;margin-top:24px">
+      <img class="shot" src="assets/builder-import.png" alt="Builder after importing csmbc.org with the Easy Button">
+      <div style="display:grid;gap:14px;align-content:start">
+        <div class="card royal" style="border-radius:16px"><div style="font:700 56px var(--head);color:var(--gold)">84%</div><p style="font-size:15px">of key fields auto-filled (37 of 44) on 4 TCO client sites</p></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="card"><div style="font:700 30px var(--head);color:var(--royal)">~1 sec</div><p style="font-size:13px">per site, before any AI step</p></div>
+          <div class="card"><div style="font:700 30px var(--head);color:var(--royal)">4 / 4</div><p style="font-size:13px">sites imported without errors</p></div>
+        </div>
+        <p style="font-size:15px;line-height:1.45"><b>Found:</b> name, pastor, address, phone, service times, Givelify / Pushpay, Watch Live, YouTube channel, logo</p>
+        <p style="font-size:15px;line-height:1.45"><b>Learned:</b> heuristics get most facts; AI fills gaps; the user always reviews</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 12 PoC templates -->
+<section class="slide" data-notes="Both sites use the same content model and the same renderer. Only the template differs. They are published on separate subdomains from one server, which proves the multi-tenant routing. The colors came from each logo and are adjusted for readable contrast. The event graphics in the slider can be downloaded for social media.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">5</span>STEP 5 OF 7</div>
+    <h1>Same content, two templates, any device</h1>
+    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;margin-top:24px">
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><img class="shot" src="assets/site-grace.png" alt="Grace template, Clay Street"><p style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Grace template: Clay Street</p></div>
+          <div><img class="shot" src="assets/site-harvest.png" alt="Harvest template, Second Calvary"><p style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Harvest template: Second Calvary</p></div>
+        </div>
+        <div style="margin-top:18px;display:grid;gap:8px;font-size:15px;line-height:1.4">
+          <p><b>Published at</b> clay-street.localhost and second-calvary.localhost from one server, using the same routing as church.faithosity.com</p>
+          <p><b>Colors from the logo</b> and darkened until white text passes WCAG AA; uploads resized to WebP</p>
+          <p><b>Event graphics</b> generated in church colors and exportable as 1080×1080 for social media</p>
+        </div>
+      </div>
+      <div><img class="shot" src="assets/site-mobile.png" alt="Mobile view" style="height:410px;width:auto"><p style="font:700 14px var(--body);color:var(--royal);margin-top:8px">Mobile view</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 13 PoC readiness/admin -->
+<section class="slide" data-notes="The readiness checklist is working: Second Calvary is at nine of eleven because service times and ministries were not found on its homepage, so publishing is blocked until the church adds them. The admin page is a first version of the TCO view. I also added basic security, such as blocking imports from internal network addresses. It has no login or database yet; those come in phase zero and alpha.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">5</span>STEP 5 OF 7</div>
+    <h1>Readiness checklist and TCO admin, also in the PoC</h1>
+    <div style="display:grid;grid-template-columns:330px 1fr;gap:34px;margin-top:24px">
+      <img class="shot" src="assets/builder-checklist.png" alt="Readiness checklist">
+      <div>
+        <img class="shot" src="assets/admin-crop.png" alt="TCO admin view">
+        <div style="margin-top:22px;display:grid;gap:12px;font-size:16px;line-height:1.4">
+          <p><b>11 readiness checks</b> block publishing until done. Second Calvary (left) is missing service times and ministries.</p>
+          <p><b>Admin view</b> lists every church with template, readiness, AWWA and status.</p>
+          <p><b>Security basics:</b> blocks imports of internal addresses (SSRF), escapes all content, limits request sizes.</p>
+          <p><b>Honest limits:</b> no login, database or billing yet. Those are Phase 0 and Alpha work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 14 Team -->
+<section class="slide" data-notes="This follows what the four of us discussed: JC and CJ lean front end, Aljon heavy back end, and I take architecture and platform. I added JC on AI because of his AI engineering background. The design team owns the template visuals, and Bob owns UX direction. We would work in two-week sprints with a demo each time, pull requests reviewed by a teammate, and a staging environment so leadership sees features before they go live.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">6</span>STEP 6 OF 7</div>
+    <h1>Team roles: a proposal from our discussion</h1>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:24px">
+      <div class="card royal row" style="height:150px"><span class="num" style="width:76px;height:76px;font-size:20px">AK</span><div><h3>Ace · Architecture &amp; platform</h3><p>AWS account, multi-tenant hosting, domains and SSL, Cognito roles, Stripe billing design, CI/CD, security and code-review standards</p></div></div>
+      <div class="card row"><span class="num" style="width:76px;height:76px;font-size:20px">JC</span><div><h3>JC · AI &amp; integrations</h3><p>Easy Button, AI content and images, usage metering, support chatbot; also front end</p></div></div>
+      <div class="card row" style="height:150px"><span class="num" style="width:76px;height:76px;font-size:20px">CJ</span><div><h3>CJ · Builder front end</h3><p>Guided wizard, live preview, templates as components, mobile and accessibility</p></div></div>
+      <div class="card row"><span class="num" style="width:76px;height:76px;font-size:20px">AS</span><div><h3>Aljon · Core back end</h3><p>APIs, data model, publishing, email (SES), analytics, admin features</p></div></div>
+    </div>
+    <h3 style="font:700 19px var(--head);color:var(--royal);margin-top:22px">How we work</h3>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px">
+      <div class="card" style="padding:14px 18px"><b>2-week sprints</b><p style="margin-top:4px;font-size:14px">Demo to leadership at the end</p></div>
+      <div class="card" style="padding:14px 18px"><b>Daily stand-up</b><p style="margin-top:4px;font-size:14px">9:30 with James</p></div>
+      <div class="card" style="padding:14px 18px"><b>Pull requests</b><p style="margin-top:4px;font-size:14px">Every change reviewed + tested in CI</p></div>
+      <div class="card" style="padding:14px 18px"><b>Staging first</b><p style="margin-top:4px;font-size:14px">Leadership sees features before release</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 15 Questions -->
+<section class="slide" data-notes="These are the decisions I need to plan precisely. The most urgent are the template approach and tools, because phase zero depends on them.">
+  <div class="pad">
+    <div class="eyebrow"><span class="badge">7</span>STEP 7 OF 7</div>
+    <h1>Decisions I need from leadership</h1>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:26px">
+      <div class="card row" style="height:128px"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Templates</h3><p>Start from the 3 Sanctuary templates? Who designs the next 1–3 to reach <span style="white-space:nowrap">4–6</span>?</p></div></div>
+      <div class="card row"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Homepage sections</h3><p>Add Give, service times and pastor to the templates? Pick beta churches?</p></div></div>
+      <div class="card row" style="height:128px"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Chatbot authority</h3><p>What can the AI give without a human: credits, refunds, limits?</p></div></div>
+      <div class="card row"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Accessibility</h3><p>Legal answer on WCAG for church sites, before templates are built</p></div></div>
+      <div class="card row" style="height:128px"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Giving platform</h3><p>Design for TCO's own Stripe-based giving now, build after MVP?</p></div></div>
+      <div class="card row"><span style="font:700 34px var(--head);color:var(--gold);width:40px">?</span><div><h3>Tools</h3><p>GitHub org, AWS sub-account, AI dev tools, project tracker (Linear/Jira)</p></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Faithosity MVP · Ace King Mengote</span><span class="pg"></span></div>
+</section>
+
+<!-- 16 Close -->
+<section class="slide dark" data-notes="To finish: today we compare the four plans and agree on one architecture. This week we set up the tools. Then phase zero for two weeks. Thank you. I'm happy to answer questions or show the proof of concept live.">
+  <div style="position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:var(--royal)"></div>
+  <div style="position:absolute;left:78px;top:100px;width:900px">
+    <div style="color:var(--gold);font:700 15px var(--body);letter-spacing:.05em">NEXT STEPS</div>
+    <div style="font:700 50px/1.15 var(--head);margin-top:18px">Merge plans, then start Phase 0</div>
+    <div style="margin-top:40px;display:grid;gap:22px;font-size:19px">
+      <div class="row" style="align-items:center"><span class="num" style="width:44px;height:44px">1</span><b style="color:var(--gold);width:160px">Today</b><span>Compare all four plans and agree one architecture</span></div>
+      <div class="row" style="align-items:center"><span class="num" style="width:44px;height:44px">2</span><b style="color:var(--gold);width:160px">This week</b><span>Set up GitHub, AWS sub-account and tracker</span></div>
+      <div class="row" style="align-items:center"><span class="num" style="width:44px;height:44px">3</span><b style="color:var(--gold);width:160px">Weeks 1–2</b><span>Phase 0: foundations and the two risky spikes</span></div>
+      <div class="row" style="align-items:center"><span class="num" style="width:44px;height:44px">4</span><b style="color:var(--gold);width:160px">Ongoing</b><span>Two-week sprint demos to leadership</span></div>
+    </div>
+    <p style="margin-top:56px;color:#B9B2CF;font-size:16px">Thank you · Questions? · PoC: Documents/Projects/faithosity-poc</p>
+  </div>
+</section>
+
+</div>
+<div id="hud"><span id="count">1 / 16</span> · scroll to move · N notes · F fullscreen</div>
+<script>
+// Diagrams built from data so they stay consistent
+const flow = [["Sign up","Cognito account · email opt-in required, SMS optional"],["Easy Button","Import the current site, or start fresh"],["Church info","Name, address, service times, AWWA"],["Logo & colors","Palette suggested from the logo"],["Template","Preview any look; switch anytime"],["Pages","Tick church pages + add custom pages"],["Content + AI","AI writes or improves text and images"],["Watch & give","Live stream, giving links, calendar"],["Readiness","Checklist blocks publishing until complete"],["Publish","church.faithosity.com or own domain"]];
+document.getElementById("flow").innerHTML = flow.map(([t,d],i)=>{
+  const dark = i===1||i===9, last = i%5===4;
+  return `<div class="card${dark?" royal":""}" style="height:168px;position:relative;padding:16px">
+    <div class="row" style="align-items:center;gap:10px"><span class="num" style="width:30px;height:30px;font-size:13px">${i+1}</span><h3 style="margin:0;font-size:17px;${dark?"color:#fff":""}">${t}</h3></div>
+    <p style="margin-top:12px;font-size:14px">${d}</p>
+    ${last?"":`<span class="arrow" style="position:absolute;right:-30px;top:66px">→</span>`}</div>`;}).join("");
+const secs=["Header + Plan a Visit","Hero: headline, Plan a Visit, Watch Online","4 quick links (worship, location, live, serve)","Featured: mission or upcoming event","Messages for real life (3 sermon cards)","Life together (2 event cards)","Invitation band: “There’s a place for you here”","Footer: Powered by The Church Online"];
+document.getElementById("sections").innerHTML=secs.map((t,i)=>`<li class="row" style="align-items:center;gap:10px;font-size:15px"><span class="num" style="width:26px;height:26px;font-size:12px">${i+1}</span>${t}</li>`).join("");
+const arch = [["Visitors & users",[["Church admins","Builder app"],["TCO staff","Admin console"],["Site visitors","church.faithosity.com · own domains"]]],
+  ["Edge",[["CloudFront + SSL","Wildcard + custom domains (ACM)"],["Route 53","Domains, DNS, optional purchase"]]],
+  ["Application (Next.js · TypeScript)",[["Builder + admin UI","React, live preview"],["Site renderer","Tenant from Host header, cached"],["API","Accounts, content, publish, billing"]],true],
+  ["Services",[["Cognito","Auth, roles"],["PostgreSQL","Accounts, sites, content"],["S3 + Lambda","Images: resize, WebP"],["AI service","OpenAI, metered"],["Stripe · SES","Billing, email"]]]];
+document.getElementById("arch").innerHTML = arch.map(([lab,boxes,dark],i)=>`
+  <div style="display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center">
+    <div style="font:700 14px var(--body);color:var(--muted)">${lab}</div>
+    <div style="display:grid;grid-template-columns:repeat(${boxes.length},1fr);gap:14px">${boxes.map(([t,d])=>`
+      <div class="card${dark?" royal":""}" style="padding:12px 16px;height:78px;border-radius:10px"><b style="font-size:16px;color:${dark?"#fff":"var(--royal)"}">${t}</b><p style="font-size:13px;margin-top:6px;${dark?"color:#E6E1F2":""}">${d}</p></div>`).join("")}</div>
+  </div>${i<3?'<div style="margin-left:172px;text-align:center;color:var(--muted);line-height:1">↓</div>':""}`).join("");
+
+// Scrolling layout: every slide sits in a scaled frame, stacked down the page
+const slides=[...document.querySelectorAll(".slide")], bar=document.getElementById("bar"), count=document.getElementById("count");
+const frames=slides.map((s,i)=>{
+  const p=s.querySelector(".pg"); if(p) p.textContent=i+1;
+  const f=document.createElement("div"); f.className="frame"; f.id="s"+(i+1);
+  s.parentNode.insertBefore(f,s); f.appendChild(s);
+  const n=document.createElement("div"); n.className="note";
+  n.innerHTML=`<b>Slide ${i+1} · speaker notes</b><br>${s.dataset.notes||""}`;
+  f.after(n); return {f,n};
+});
+function fit(){
+  const k=Math.min((innerWidth-48)/1280,1.25);
+  frames.forEach(({f,n},i)=>{f.style.width=1280*k+"px"; f.style.height=720*k+"px"; n.style.width=1280*k+"px"; slides[i].style.transform=`scale(${k})`;});
+}
+function onScroll(){
+  const mid=innerHeight/2; let cur=0;
+  frames.forEach(({f},i)=>{if(f.getBoundingClientRect().top<mid) cur=i;});
+  count.textContent=`${cur+1} / ${slides.length}`;
+  bar.style.width=((cur+1)/slides.length*100)+"%";
+}
+addEventListener("keydown",e=>{
+  if(e.key.toLowerCase()==="n") document.body.classList.toggle("shownotes");
+  else if(e.key.toLowerCase()==="f"){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+addEventListener("resize",()=>{fit();onScroll();}); addEventListener("scroll",onScroll,{passive:true});
+fit(); onScroll();
+const start=parseInt(location.hash.replace(/\D/g,"")); if(start>1) document.getElementById("s"+start)?.scrollIntoView();
+</script>
+</body>
+</html>
